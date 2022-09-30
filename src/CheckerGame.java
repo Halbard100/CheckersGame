@@ -6,6 +6,7 @@ public class CheckerGame {
     Player currentPlayer;
     CheckerBoard board;
     boolean isOver;
+    boolean forcedMove = false;
 
     public CheckerGame(Player playerOne, Player playerTwo){
         this.playerOne = playerOne;
@@ -22,6 +23,7 @@ public class CheckerGame {
     }
 
     public boolean makeMove(int x, int y, int dx, int dy){
+
         {
 
             if (board.board[x][y].isEmpty()) {
@@ -81,7 +83,7 @@ public class CheckerGame {
 
         board.movePiece(x, y, dx, dy);
         kingCheck(dx, dy);
-        if (!jumpCheck()){
+        if (!jumpCheck(dx, dy)){
             changeTurn();
         }
         return true;
@@ -98,8 +100,8 @@ public class CheckerGame {
             System.out.println(currentPlayer.name + " got a king!");
         }
     }
-    public boolean jumpCheck(){
-        return false;
+    public boolean jumpCheck(int x, int y){
+        return forcedMove;
     }
 
     public void update(){
