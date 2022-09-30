@@ -1,4 +1,6 @@
 public class CheckerGame {
+
+    static boolean DEBUGGING = true;
     Player playerOne;
     Player playerTwo;
     Player currentPlayer;
@@ -47,17 +49,35 @@ public class CheckerGame {
             }
         } // basic move validation checks
 
+
+
         // jumps a piece
-        if (!board.board[(x+dx)/2][(y+dy)/2].isEmpty()){
-            if(board.board[(x+dx)/2][(y+dy)/2].getPiece().owner != currentPlayer){
-                currentPlayer.addScore();
-                board.board[(x+dx)/2][(y+dy)/2].removePiece();
+        if (Math.abs(x-dx) == 1) {
+            // valid single move
+        } else if (Math.abs(x-dx) == 2 && !board.board[(x+dx)/2][(y+dy)/2].isEmpty()){
+            if (board.board[(x+dx)/2][(y+dy)/2].getPiece().owner == currentPlayer){
+                System.out.println("You can't jump your own pieces");
+                return false;
             }
+            // Jump logic for king pieces
+            if(board.board[(x+dx)/2][(y+dy)/2].getPiece().owner != currentPlayer){
+                if (!board.board[(x+dx)/2][(y+dy)/2].getPiece().king){
+                    // if the piece being jumped is not a king, anything can jump it
+                    currentPlayer.addScore();
+                    board.board[(x+dx)/2][(y+dy)/2].removePiece();
+                } else if (board.board[(x+dx)/2][(y+dy)/2].getPiece().king && board.board[x][y].getPiece().king){
+                    // if both pieces are kings
+                    currentPlayer.addScore();
+                    board.board[(x+dx)/2][(y+dy)/2].removePiece();
+                } else {
+                    System.out.println("Only kings can take kings.");
+                    return false;
+                }
+            }
+        } else {
+            System.out.println("Moved too far.");
+            return false;
         }
-//        else {
-//            System.out.println("Can't move that far.");
-//            return false;
-//        }
 
         board.movePiece(x, y, dx, dy);
         kingCheck(dx, dy);

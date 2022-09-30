@@ -16,4 +16,8 @@ public class Player {
         score += score;
     }
 
+    public String toString(){
+        return name;
+    }
+
 }
