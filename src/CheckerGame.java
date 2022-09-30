@@ -88,7 +88,11 @@ public class CheckerGame {
         }
         System.out.println("Player 1 -- " + playerOne.name + " (white): " + playerOne.score);
         System.out.println("Player 2 -- " + playerTwo.name + " (black): " + playerTwo.score);
-        System.out.println("It is " + currentPlayer.name + "'s turn");
+        if (!isOver){
+            System.out.println("It is " + currentPlayer.name + "'s turn");
+        } else {
+            System.out.println("Game Over, thanks for playing");
+        }
         System.out.println(board.printOutBoard());
     }
 
