@@ -24,7 +24,7 @@ public class CheckerBoard {
         for (int x = 0; x < board.length; x++){
             for (int y = 0; y < board[x].length; y++){
                 board[x][y] = new Space();
-                if ((x+y)%2 == 0) {     // black square
+                if ((x+y)%2 == 1) {     // black square
                     if (x < 3) {        // player one side
                         board[x][y].putPiece(new CheckerPiece(one));
                     } else if (x > 4 ) {
@@ -62,12 +62,12 @@ public class CheckerBoard {
             if (DEBUGGING) {
                 ret += " " + x + " ";
             }
-            for (int y = 0; y < board.length; y++){
+            for (int y = 0; y < board[x].length; y++){
                 if (!board[x][y].isEmpty()){
                     if (board[x][y].getPiece().owner == one) {
-                        ret += board[x][y].getPiece().king ? "[W]" : "[w]";
-                    } else if (board[x][y].getPiece().owner == two){
                         ret += board[x][y].getPiece().king ? "[B]" : "[b]";
+                    } else if (board[x][y].getPiece().owner == two){
+                        ret += board[x][y].getPiece().king ? "[W]" : "[w]";
                     }
                 } else {
                     ret += "[ ]";
@@ -78,4 +78,5 @@ public class CheckerBoard {
 
         return ret;
     }
+
 }
